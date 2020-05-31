@@ -7,7 +7,7 @@ const router = new Router()
 router
     .get("/items", getItems)
     .get("/item/:name", getItem)
-    .get("/add/:name/:price/:discount", addItem)
+    .post('/add', addItem)
 
 // Application
 const app = new Application()
@@ -17,6 +17,7 @@ app.use(router.allowedMethods())
 // Run "deno run --allow-net app.ts" to visit localhost:8000 and all the routes
 await app.listen({port: 8000})
 
-// localhost:8000/items -> Shows all items
-// localhost:8000/item/Orange -> Shows the item named 'Orange'
-// localhost:8000/add/Orange/1.50/1 -> Adds an item with the specified name, price, and discount
+// Use curl in another cmd to carry out GET and POST methods
+// curl localhost:8000/items -> Shows all items
+// curl localhost:8000/item/Orange -> Shows the item named 'Orange'
+// curl localhost:8000/add -X POST -H "Content-Type: application/json" -d "{ \"name\": \"Orange\", \"price\": 1.50, \"discount\": true}" -> Adds an item with the specified name, price, and discount

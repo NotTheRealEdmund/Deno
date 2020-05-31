@@ -1,4 +1,3 @@
-import { Item } from "./model.ts"
 import { items } from "./data.ts"
 
 export const getItems = ({response} : {response: any}) => {
@@ -24,18 +23,16 @@ export const getItem = (
 }  
 
 export const addItem = async (
-    {params, response} : {
-        params: {
-            name: any,
-            price: any,
-            discount: any,
-        }
-        response: any
+    {request, response} : {
+        request: any
+        response: any 
     }
 ) => {
-    const item: Item = {name: params.name, price: Number(params.price), discount: params.discount == '1' ? true : false}
+    const body = await request.body()
+    const item: Item = body.value  
     items.push(item)
     
     response.body = {itemsAdded: "Success"}
     response.status = 200
-}  
+}
+  
