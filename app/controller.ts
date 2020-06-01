@@ -1,9 +1,11 @@
-import { items } from "./data.ts";
+import { items, addItems, deleteItems } from "./data.ts";
 
+// Show all items in data
 export const getItems = ({ response }: { response: any }) => {
   response.body = items;
 };
 
+// Show an item in data
 export const getItem = (
   { params, response }: {
     params: {
@@ -18,10 +20,11 @@ export const getItem = (
     response.status = 200;
     return;
   }
-  response.body = { msg: "Cannot find item " + params.name };
+  response.body = { itemFound: "Failure" };
   response.status = 400;
 };
 
+// Add an item to data
 export const addItem = async (
   { request, response }: {
     request: any;
@@ -30,8 +33,23 @@ export const addItem = async (
 ) => {
   const body = await request.body();
   const item: Item = body.value;
-  items.push(item);
+  addItems(item);
 
-  response.body = { itemsAdded: "Success" };
+  response.body = { itemAdded: "Success" };
+  response.status = 200;
+};
+
+// Remove an item from data
+export const deleteItem = (
+  { params, response }: {
+    params: {
+      name: string;
+    };
+    response: any;
+  },
+) => {
+  deleteItems(params.name);
+
+  response.body = { itemDeleted: "Success" };
   response.status = 200;
 };

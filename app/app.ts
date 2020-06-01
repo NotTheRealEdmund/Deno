@@ -1,13 +1,14 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
-import { getItems, getItem, addItem } from "./controller.ts";
+import { getItems, getItem, addItem, deleteItem } from "./controller.ts";
 
 // Server
 const router = new Router();
 router
   .get("/items", getItems)
   .get("/item/:name", getItem)
-  .post("/add", addItem);
+  .post("/add", addItem)
+  .delete("/delete/:name", deleteItem);
 
 // Application
 const app = new Application();
@@ -21,3 +22,4 @@ await app.listen({ port: 8000 });
 // curl localhost:8000/items -> Shows all items
 // curl localhost:8000/item/Orange -> Shows the item named 'Orange'
 // curl localhost:8000/add -X POST -H "Content-Type: application/json" -d "{ \"name\": \"Orange\", \"price\": 1.50, \"discount\": true}" -> Adds an item with the specified name, price, and discount
+// curl localhost:8000/delete/Orange -X DELETE -> Deletes the item named 'Orange'
