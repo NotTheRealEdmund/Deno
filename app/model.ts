@@ -1,5 +1,5 @@
 interface Item {
-    name: string,
-    price: number,
-    discount: boolean
+  name: string;
+  price: number;
+  discount: boolean;
 }
